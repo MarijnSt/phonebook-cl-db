@@ -26,7 +26,17 @@ const contact = new Contact({
     number: contactNumber
 })
 
-contact.save().then(result => {
-    console.log(`added ${contactName} number ${contactNumber} to phonebook`)
-    mongoose.connection.close()
-})
+if (process.argv.length > 3) {
+    contact.save().then(result => {
+        console.log(`added ${contactName} number ${contactNumber} to phonebook`)
+        mongoose.connection.close()
+    })
+}
+
+// Allemaal weergeven
+if (process.argv.length === 3) {
+    Contact.find({}).then(result => {
+        result.forEach(contact => { console.log(contact) })
+        mongoose.connection.close();
+    })
+}
